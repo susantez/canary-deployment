@@ -1,6 +1,6 @@
 FROM alpine/git as clone
 WORKDIR /app
-RUN git clone -b primary https://github.com/susantez/canary-deployment.git
+RUN git clone -b secondary https://github.com/susantez/canary-deployment.git
 
 FROM maven:3.8.2-openjdk-11-slim as build
 WORKDIR /app
