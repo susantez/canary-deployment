@@ -36,6 +36,4 @@ public class NotebookControllerImpl implements NotebookController {
         boolean response = service.create(item);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-
 }

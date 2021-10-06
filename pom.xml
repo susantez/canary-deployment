@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dfx</groupId>
-    <artifactId>dfx-inventory</artifactId>
+    <artifactId>sample-app</artifactId>
     <version>0.0.1</version>
     <name>dfx-inventory</name>
-    <description>dfx-inventory</description>
+    <description>Sample App to be used in advanced deployment PoC</description>
     <properties>
         <java.version>11</java.version>
     </properties>
