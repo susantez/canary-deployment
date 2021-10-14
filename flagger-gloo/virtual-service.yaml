@@ -1,0 +1,16 @@
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: sample-app
+  namespace: test
+spec:
+  virtualHost:
+    domains:
+      - '*'
+    routes:
+      - matchers:
+          - prefix: /
+        delegateAction:
+          ref:
+            name: sample-app
+            namespace: test

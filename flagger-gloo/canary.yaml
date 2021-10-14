@@ -1,0 +1,55 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: sample-app
+  namespace: test
+spec:
+  # upstreamRef (optional)
+  # defines an upstream to copy the spec from when flagger generates new upstreams.
+  # necessary to copy over TLS config, circuit breakers, etc. (anything nonstandard)
+  #  upstreamRef:
+  #    apiVersion: gloo.solo.io/v1
+  #    kind: Upstream
+  #    name: podinfo-upstream
+  #    namespace: gloo-system
+  provider: gloo
+  # deployment reference
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: sample-app
+  # HPA reference (optional)
+  autoscalerRef:
+    apiVersion: autoscaling/v2beta2
+    kind: HorizontalPodAutoscaler
+    name: sample-app
+  service:
+    # ClusterIP port number
+    port: 8080
+    # container port number or name (optional)
+    targetPort: 8080
+  analysis:
+    # schedule interval (default 60s)
+    interval: 10s
+    # max number of failed metric checks before rollback
+    threshold: 5
+    # max traffic percentage routed to canary
+    # percentage (0-100)
+    maxWeight: 50
+    # canary increment step
+    # percentage (0-100)
+    stepWeight: 5
+    # Gloo Prometheus checks
+    metrics:
+      - name: request-success-rate
+        # minimum req success rate (non 5xx responses)
+        # percentage (0-100)
+        thresholdRange:
+          min: 99
+        interval: 1m
+      - name: request-duration
+        # maximum req duration P99
+        # milliseconds
+        thresholdRange:
+          max: 500
+        interval: 30s
