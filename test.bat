@@ -1,6 +1,6 @@
 @echo off
 :top
-echo version:
-curl -s http://localhost/api/version
+curl -s http://localhost:8080/api/version
+echo .
 timeout /t 2 /nobreak > NUL
 goto top

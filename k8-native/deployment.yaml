@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sample-app
+    role: primary
+  name: sample-app
+  namespace: test
+spec:
+  minReadySeconds: 5
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 60
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: sample-app
+  replicas: 3 # Number of replicas that will be created for this deployment
+  template:
+    metadata:
+      labels:
+        app: sample-app
+    spec:
+      containers:
+        - name: sample-app
+          image: susantez/sample-app-v1.0.0 # Image that will be used to containers in the cluster
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080 # The port that the container is running on in the cluster
+              protocol: TCP
